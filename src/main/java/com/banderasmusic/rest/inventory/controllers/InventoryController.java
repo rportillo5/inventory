@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Positive;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -48,6 +49,19 @@ public class InventoryController extends AbstractController{
     public ResponseEntity<?> updateInventory(@PathVariable("id") long itemNumber, @RequestBody Inventory inventory) {
         inventoryService.update(itemNumber, inventory);
         return ResponseEntity.ok().body("Inventory item: " + inventory.getItemNumber() + " was update successfully");
+    }
+
+    @PutMapping("/inventory/{id}/addtocount/{count}")
+    public ResponseEntity<?> addItemsToInventory(@PathVariable("id") long itemNumber,
+                                                 @PathVariable("count") int count,
+                                                 @RequestBody Inventory inventory) {
+        Optional<Inventory> inv = inventoryService.get(itemNumber);
+        @Positive int startingCount = inv.get().getStartingCount();
+        startingCount+= count;
+        inventory.setStartingCount(startingCount);
+        inventoryService.update(itemNumber, inventory);
+
+        return ResponseEntity.ok().body("Inventory item: " + inventory.getItemNumber() + " was item count updated successfully");
     }
 
     @DeleteMapping("/inventory/{id}")
