@@ -47,8 +47,13 @@ public class InventoryController extends AbstractController{
 
     @PutMapping("/inventory/{id}")
     public ResponseEntity<?> updateInventory(@PathVariable("id") long itemNumber, @RequestBody Inventory inventory) {
+        printCurrentThread();
         inventoryService.update(itemNumber, inventory);
-        return ResponseEntity.ok().body("Inventory item: " + inventory.getItemNumber() + " was update successfully");
+        InventoryEvent inventoryRetrievedEvent = new InventoryEvent("One Inventory item was updated", inventory);
+        eventPublisher.publishEvent(inventoryRetrievedEvent);
+        printCurrentThread();
+
+        return ResponseEntity.ok().body("Inventory item: " + inventory.getItemNumber() + " was updated successfully");
     }
 
     @PutMapping("/inventory/{id}/addtocount/{count}")
