@@ -1,18 +1,19 @@
 package com.banderasmusic.rest.inventory.controllers;
 
+import com.banderasmusic.rest.inventory.events.InventoryEvent;
 import com.banderasmusic.rest.inventory.model.Inventory;
-import com.banderasmusic.rest.inventory.dao.InventoryDaoRepository;
 import com.banderasmusic.rest.inventory.service.InventoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
-public class InventoryController {
+@EnableAsync
+public class InventoryController extends AbstractController{
 
     private InventoryService inventoryService;
 
@@ -28,7 +29,12 @@ public class InventoryController {
 
     @GetMapping("/inventory/{id}")
     public ResponseEntity<Inventory> getInventory(@PathVariable("id") Long itemNumber) {
+        printCurrentThread();
         Optional<Inventory> inventory = inventoryService.get(itemNumber);
+        InventoryEvent inventoryRetrievedEvent = new InventoryEvent("One Inventory item is retrieved", inventory.get());
+        eventPublisher.publishEvent(inventoryRetrievedEvent);
+        printCurrentThread();
+
         return ResponseEntity.ok().body(inventory.get());
     }
 
@@ -50,4 +56,8 @@ public class InventoryController {
         return ResponseEntity.ok().body("Inventory item: " + itemNumber + " was deleted successfully");
     }
 
+    public void printCurrentThread() {
+        System.out.println("getInventory method. "
+                + Thread.currentThread().getName() + " id: " + Thread.currentThread().getId());
+    }
 }

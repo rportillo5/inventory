@@ -32,6 +32,13 @@ public class Inventory {
     public Inventory() {
     }
 
+    public Inventory(Long itm, String pc, String pd, int sc, int rp) {
+        itemNumber = itm;
+        productCode = pc;
+        productDescription = pd;
+        startingCount = sc;
+        reorderPoint = rp;
+    }
 
     @Override
     public boolean equals(Object o) {

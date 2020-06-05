@@ -1,19 +1,19 @@
 package com.banderasmusic.rest.inventory.exceptions;
 
-public class HTTP500Exception extends RuntimeException {
-    public HTTP500Exception() {
+public class NoSuchElementException extends RuntimeException {
+    public NoSuchElementException() {
         super();
     }
 
-    public HTTP500Exception(String message, Throwable cause) {
+    public NoSuchElementException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public HTTP500Exception(String message) {
+    public NoSuchElementException(String message) {
         super(message);
     }
 
-    public HTTP500Exception(Throwable cause) {
+    public NoSuchElementException(Throwable cause) {
         super(cause);
     }
 }

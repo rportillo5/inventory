@@ -1,4 +1,4 @@
-package com.banderasmusic.ecommerceproductapi.exceptions;
+package com.banderasmusic.rest.inventory.exceptions;
 
 public class HTTP500Exception extends RuntimeException {
     public HTTP500Exception() {

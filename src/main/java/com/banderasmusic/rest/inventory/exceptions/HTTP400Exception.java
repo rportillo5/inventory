@@ -1,4 +1,4 @@
-package com.banderasmusic.ecommerceproductapi.exceptions;
+package com.banderasmusic.rest.inventory.exceptions;
 
 public class HTTP400Exception extends RuntimeException {
 

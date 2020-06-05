@@ -1,17 +1,17 @@
-package com.banderasmusic.ecommerceproductapi.events;
+package com.banderasmusic.rest.inventory.events;
 
-import com.banderasmusic.ecommerceproductapi.model.Product;
+import com.banderasmusic.rest.inventory.model.Inventory;
 import org.springframework.context.ApplicationEvent;
 
-public class ProductEvent extends ApplicationEvent {
+public class InventoryEvent extends ApplicationEvent {
 
     private String eventType;
-    private Product product;
+    private Inventory inventory;
 
-    public ProductEvent(String eventType, Product product) {
-        super(product);
+    public InventoryEvent(String eventType, Inventory inventory) {
+        super(inventory);
         this.eventType = eventType;
-        this.product = product;
+        this.inventory = inventory;
     }
 
     public String getEventType() {
@@ -22,11 +22,11 @@ public class ProductEvent extends ApplicationEvent {
         this.eventType = eventType;
     }
 
-    public Product getProduct() {
-        return product;
+    public Inventory getInventory() {
+        return inventory;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 }
