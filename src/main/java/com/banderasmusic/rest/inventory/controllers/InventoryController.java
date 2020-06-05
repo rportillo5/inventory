@@ -61,7 +61,27 @@ public class InventoryController extends AbstractController{
         inventory.setStartingCount(startingCount);
         inventoryService.update(itemNumber, inventory);
 
-        return ResponseEntity.ok().body("Inventory item: " + inventory.getItemNumber() + " was item count updated successfully");
+        return ResponseEntity.ok().body("Inventory item: " + inventory.getItemNumber() + " item count updated successfully");
+    }
+
+    @PutMapping("/inventory/{id}/removefromcount/{count}")
+    public ResponseEntity<?> removeItemsFromInventory(@PathVariable("id") long itemNumber,
+                                                 @PathVariable("count") int count,
+                                                 @RequestBody Inventory inventory) {
+        String message = "";
+        Optional<Inventory> inv = inventoryService.get(itemNumber);
+        @Positive int startingCount = inv.get().getStartingCount();
+        startingCount-= count;
+        if (startingCount <= inventory.getReorderPoint()) {
+            message = "Time to reorder! " + " current count is: " + startingCount + ". Reorder point is: " +
+                    inventory.getReorderPoint();
+        } else {
+            message = "Inventor item: " + inventory.getItemNumber() + " item count updated successfully ";
+        }
+        inventory.setStartingCount(startingCount);
+        inventoryService.update(itemNumber, inventory);
+
+        return ResponseEntity.ok().body(message);
     }
 
     @DeleteMapping("/inventory/{id}")
