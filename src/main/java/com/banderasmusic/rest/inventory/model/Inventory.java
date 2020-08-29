@@ -1,8 +1,7 @@
 package com.banderasmusic.rest.inventory.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import io.swagger.annotations.ApiModel;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,9 +11,10 @@ import javax.validation.constraints.*;
 import java.util.Objects;
 
 @Entity
-@Setter
-@Getter
-@ToString
+@Data
+@AllArgsConstructor
+@ApiModel(description = "Using Lombok annotations")
+@EqualsAndHashCode
 public class Inventory {
 
     @Id
@@ -31,28 +31,4 @@ public class Inventory {
 
     public Inventory() {
     }
-
-    public Inventory(Long itm, String pc, String pd, int sc, int rp) {
-        itemNumber = itm;
-        productCode = pc;
-        productDescription = pd;
-        startingCount = sc;
-        reorderPoint = rp;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Inventory inventory = (Inventory) o;
-        return getItemNumber().equals(inventory.getItemNumber()) &&
-                getProductCode().equals(inventory.getProductCode()) &&
-                getProductDescription().equals(inventory.getProductDescription());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getItemNumber(), getProductCode(), getProductDescription());
-    }
-
 }
