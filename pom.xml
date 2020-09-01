@@ -11,7 +11,7 @@
     <groupId>com.banderasmusic.rest</groupId>
     <artifactId>inventory</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>inventory</name>
     <description>Inventory project for Spring Boot</description>
 
